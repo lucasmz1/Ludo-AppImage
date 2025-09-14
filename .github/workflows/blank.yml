@@ -21,8 +21,6 @@ jobs:
   build:
     name: 'setup os target'
     runs-on: ubuntu-latest
-    container:
-      image: archlinux:latest
     strategy:
       fail-fast: false
     steps:
@@ -31,7 +29,7 @@ jobs:
 
       - name: Make AppImage
         run: |
-          pacman -Sy file binutils patchelf findutils grep sed coreutils strace wget curl --noconfirm
+          sudo apt install file binutils patchelf findutils grep sed coreutils strace wget curl -y
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir dist
