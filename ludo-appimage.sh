@@ -65,4 +65,4 @@ EOF
 cd ..
 
 wget -c "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage" && mv appimagetool-x86_64.AppImage appimagetool && chmod +x appimagetool
-ARCH=x86_64 ./appimagetool -n Ludo-Linux-x11-x86_64*
+ARCH=x86_64 ./appimagetool --appimage-extract-and-run -n Ludo-Linux-x11-x86_64*
