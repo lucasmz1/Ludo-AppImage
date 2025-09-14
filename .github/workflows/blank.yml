@@ -19,14 +19,19 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
+    name: 'setup os target'
     runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+    strategy:
+      fail-fast: false
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
       - name: Make AppImage
         run: |
-          sudo apt install file binutils patchelf findutils grep sed coreutils strace wget curl -y
+          sudo pacman -S file binutils patchelf findutils grep sed coreutils strace wget curl -y
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir dist
