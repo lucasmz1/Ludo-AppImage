@@ -1,32 +1,48 @@
-name: Ludo-AppImage
+name: Ludo AppImage
+
+# Controls when the action will run.
 on:
+  # Build at 00:00 every 6th day
   schedule:
-    - cron: "0 6 * * 0"
+    - cron: "0 0 */6 * *"
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+    paths-ignore: [ '**/README.md' ]
+  pull_request:
+    branches: [ main ]
+    paths-ignore: [ '**/README.md' ]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    name: 'setup os target'
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-
     steps:
-          
-      - name: 'build appimage'
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - name: Make AppImage
         run: |
-          sudo apt update
-          sudo apt install git wget curl file binutils patchelf findutils grep sed coreutils strace -y
-          find -iname 'ludo-appimage*' | xargs -i -t -exec chmod a+x {} && find -iname 'ludo-appimage*' | xargs -i -t -exec {} +
+          sudo apt install file binutils patchelf findutils grep sed coreutils strace wget curl -y
+          chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
-          mkdir dist/
-          mv Ludo-x86_64*.AppImage dist/
-          
+          mkdir dist
+          mv *.AppImage* dist/
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: 'Ludo place'
-          path: 'dist/*AppImage'
+          name: AppImage
+          path: 'dist/*.AppImage*'
+
+      - name: Upload version artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: version
+          path: 'dist/version'
 
   release:
     needs: [build]
@@ -35,10 +51,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download Ludo artifact
+      - name: Download AppImage artifact
         uses: actions/download-artifact@v4
         with:
-          name: Ludo place
+          name: AppImage
 
       - name: Delete Previous Release
         run: |
