@@ -17,7 +17,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install git wget curl file binutils patchelf findutils grep sed coreutils strace -y
-          chmod +x ${GITHUB_WORKSPACE}/ludo-appimage.sh
+          find -iname 'ludo-appimage*' | xargs -i -t -exec chmod a+x {} && find -iname 'ludo-appimage*' | xargs -i -t -exec {} +
           ./ludo-appimage.sh
           mkdir dist/
           mv Ludo-x86_64*.AppImage dist/
