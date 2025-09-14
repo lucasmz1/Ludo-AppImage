@@ -31,7 +31,7 @@ jobs:
 
       - name: Make AppImage
         run: |
-          sudo pacman -S file binutils patchelf findutils grep sed coreutils strace wget curl -y
+          pacman -S file binutils patchelf findutils grep sed coreutils strace wget curl -y
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir dist
