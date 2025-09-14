@@ -42,7 +42,7 @@ URL_BIN2="$BASE_URL2/$FILE2"
 echo "Baixando binário: $URL_BIN2"
 wget -c "$URL_BIN2"
 
-mv sharun-x86_64 sharun && chmod +x sharun && mv sharun ./Ludo-Linux-x11-x86_64* && cd Ludo-Linux-x11-x86_64* && ./sharun l -p -v -e -k ./ludo && ./sharun -g && ln sharun AppRun
+mv sharun-x86_64 sharun && chmod +x sharun && mv sharun ./Ludo-Linux-x11-x86_64* && cd Ludo-Linux-x11-x86_64* && ./sharun l -p -v -e -k ./ludo ./cores/* && ./sharun -g && ln sharun AppRun
 mv assets ./bin && mv cores ./bin && mv database ./bin
 find ./bin/assets -iname 'icon.svg' | xargs -i -t -exe cp {} .
 rm ludo
