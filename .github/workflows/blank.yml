@@ -16,8 +16,8 @@ jobs:
       - name: 'build appimage'
         run: |
           sudo apt update
-          sudo apt install git wget curl strace ltrace binutils -y
-          chmod +x ludo-appimage.sh
+          sudo apt install git wget curl file binutils patchelf findutils grep sed coreutils strace -y
+          chmod +x ./ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir dist/
           mv Ludo-x86_64*.AppImage dist/
