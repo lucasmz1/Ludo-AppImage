@@ -34,7 +34,7 @@ jobs:
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir dist
-          find -iname '*.AppImage' | xargs -i -t -exec mv {} dist/ \;
+          find -iname 'Ludo-x86_64.AppImage' | xargs -i -t -exec mv {} dist/ \;
           ls -la dist/
 
       - name: Upload artifact
