@@ -37,7 +37,7 @@ jobs:
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           find . -iname 'Ludo*.AppImage' -type f -exec mv {} "dist/" \;
-          echo "${APP_VERSION}" > "dist/"
+          echo "${APP_VERSION}" > "dist/version.txt"
 
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v4
@@ -49,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: version
-          path: "dist/version"
+          path: "dist/version.txt"
 
   release:
     needs: [build]
