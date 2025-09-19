@@ -34,7 +34,7 @@ jobs:
           VERSION=$(curl -s https://api.github.com/repos/libretro/ludo/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: creat dist
+      - name: 'creat dist'
         run: |
           mkdir -p ./dist/
 
@@ -60,37 +60,37 @@ jobs:
           name: version
           path: 'dist/version'
 
-  release:
-    needs: [build]
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
+    release:
+     needs: [build]
+     permissions:
+       contents: write
+     runs-on: ubuntu-latest
 
-    steps:
-     - name: Download AppImage artifact
-       uses: actions/download-artifact@v4
-       with:
+     steps:
+      - name: Download AppImage artifact
+        uses: actions/download-artifact@v4
+        with:
          name: AppImage
-     - name: Download version artifact
-       uses: actions/download-artifact@v4
-       with:
+      - name: Download version artifact
+        uses: actions/download-artifact@v4
+        with:
          name: version
 
 
-     - name: Read version
-       run: echo "APP_VERSION=$(cat version)" >> $GITHUB_ENV
+      - name: Read version
+        run: echo "APP_VERSION=$(cat version)" >> $GITHUB_ENV
 
-     - name: Delete Previous Release
-       run: |
+      - name: Delete Previous Release
+        run: |
           gh release delete "${APP_VERSION}" --repo "${GITHUB_REPOSITORY}" --cleanup-tag -y || echo "No release to delete"
-       env:
+        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       continue-on-error: true
+        continue-on-error: true
 
 
-     - name: Create Release
-       uses: softprops/action-gh-release@v2
-       with:
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
           name: "Ludo ${{ env.APP_VERSION }}"
           tag_name: ${{ env.APP_VERSION }}
           prerelease: false
@@ -99,5 +99,5 @@ jobs:
           make_latest: true
           files: |
             AppImage/Ludo-${{ env.APP_VERSION }}.AppImage
-       env:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
