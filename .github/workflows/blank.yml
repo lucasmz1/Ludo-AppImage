@@ -1,16 +1,22 @@
 name: Ludo AppImage
 
+# Controls when the action will run.
 on:
+  # Build at 00:00 every 6th day
   schedule:
     - cron: "0 0 */6 * *"
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
     paths-ignore: [ '**/README.md' ]
   pull_request:
     branches: [ main ]
     paths-ignore: [ '**/README.md' ]
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     name: setup os target
@@ -22,11 +28,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get Ludo version from GitHub
-        run: |
-          VERSION=$(curl -s https://api.github.com/repos/libretro/ludo/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-          echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
-
       - name: Make AppImage
         run: |
           pacman -Sy xorg-server-xvfb findutils file binutils patchelf grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
@@ -35,12 +36,31 @@ jobs:
           find . -iname 'Ludo*.AppImage' -type f -exec mv {} "${GITHUB_WORKSPACE}" \;
           APPIMAGE=$(find -iname '**.AppImage' -type d)
           echo "${APP_VERSION}" > "${GITHUB_WORKSPACE}/version.txt"
-    
-      - name: Read version
-        run: |
-          VERSION=$(cat version.txt)
-          echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
-    
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppImage
+          path: 'dist/*.AppImage*'
+
+      - name: Upload version artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: version
+          path: 'dist/version'
+
+  release:
+    needs: [build]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download AppImage artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: AppImage
+
       - name: Delete Previous Release
         run: |
           gh release delete "${APP_VERSION}" --repo "${GITHUB_REPOSITORY}" --cleanup-tag -y || echo "No release to delete"
@@ -51,13 +71,13 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Ludo ${{ env.APP_VERSION }}"
-          tag_name: ${{ env.APP_VERSION }}
+          name: "Continuous universal"
+          tag_name: continuous-universal
           prerelease: false
           draft: false
           generate_release_notes: false
           make_latest: true
           files: |
-            AppImage/Ludo-${{ env.APP_VERSION }}.AppImage
-    env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            *.AppImage*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
