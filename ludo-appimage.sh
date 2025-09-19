@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eux
+
 REPO1="libretro/ludo"
 REPO2="VHSgunzo/sharun"
 ARQ1="x11-x86_64"
