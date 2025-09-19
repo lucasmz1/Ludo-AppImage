@@ -62,7 +62,7 @@ jobs:
         continue-on-error: true
 
       - name: Create Release
-        uses: softprops/action-gh-release@v4
+        uses: softprops/action-gh-release@v1
         with:
           name: "Continuous universal"
           tag_name: continuous-universal
