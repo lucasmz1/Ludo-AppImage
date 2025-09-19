@@ -68,6 +68,6 @@ StartupNotify=false
 EOF
 
 cd ..
-
+export ARCH=x86_64
 wget -c "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage" && mv appimagetool-x86_64.AppImage appimagetool && chmod +x appimagetool
 find -iname '**ludo**' -type d | xargs -i -t -exec ./appimagetool --appimage-extract-and-run -n {}
