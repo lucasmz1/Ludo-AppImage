@@ -36,7 +36,7 @@ jobs:
 
       - name: Make AppImage
         run: |
-          pacman -Sy xorg-server-xvfb file binutils patchelf findutils grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
+          pacman -Sy xorg-server-xvfb file binutils patchelf findutils grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 jq --noconfirm
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir dist
