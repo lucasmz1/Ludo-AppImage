@@ -44,7 +44,7 @@ jobs:
           pacman -Sy xorg-server-xvfb findutils file binutils patchelf findutils grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
-          find -iname '**.AppImage**' -type f | xargs -i -t -exec mv {} ${GITHUB_WORKSPACE}/dist/
+          find -iname '**.AppImage**' -type f | xargs -i -t -exec mv {} ${GITHUB_WORKSPACE}/dist/ \;
           mv dist/*.AppImage dist/Ludo-${APP_VERSION}.AppImage
           echo "${APP_VERSION}" > dist/version
 
