@@ -49,7 +49,7 @@ wget -c "$URL_BIN2"
 
 mv sharun-x86_64 sharun && chmod +x sharun && mv sharun ./Ludo-Linux-x11-x86_64* && cd Ludo-Linux-x11-x86_64* && xvfb-run -a ./sharun l -p -v -e -k ./ludo && ./sharun -g && ln sharun AppRun
 mv assets ./bin && mv cores ./bin && mv database ./bin
-find ./bin/assets -iname 'icon.svg' | xargs -i -t -exe cp {} .
+find ./bin/assets -iname 'icon.svg' | xargs -i -t -exec cp {} .
 rm ludo
 cat << EOF > .env
 SHARUN_WORKING_DIR=\${SHARUN_DIR}/bin
@@ -70,4 +70,4 @@ EOF
 cd ..
 
 wget -c "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage" && mv appimagetool-x86_64.AppImage appimagetool && chmod +x appimagetool
-find -iname '**Ludo**' -type d | xargs -i -t -exec ./appimagetool --appimage-extract-and-run -n {}
+find -iname '**ludo**' -type d | xargs -i -t -exec ./appimagetool --appimage-extract-and-run -n {}
