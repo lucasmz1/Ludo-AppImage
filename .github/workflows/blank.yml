@@ -40,7 +40,7 @@ jobs:
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir dist
-          mv *Ludo.AppImage* dist/
+          mv *Ludo-x86_64.AppImage* dist/
           mv dist/*.AppImage dist/Ludo-${APP_VERSION}.AppImage
           echo "${APP_VERSION}" > dist/version
 
