@@ -45,7 +45,14 @@ jobs:
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           find -iname '**.AppImage**' -type f | xargs -i -t -exec mv {} ${GITHUB_WORKSPACE}/dist/ \;
+          if ls dist/*.AppImage 1> /dev/null 2>&1; then
           mv dist/*.AppImage dist/Ludo-${APP_VERSION}.AppImage
+          else
+          echo "❌ Nenhum arquivo .AppImage encontrado em dist/"
+          find . -type f
+          exit 1
+          fi
+
           echo "${APP_VERSION}" > dist/version
 
       - name: Upload artifact
