@@ -36,13 +36,13 @@ jobs:
           find . -iname 'Ludo*.AppImage' -type f -exec mv {} "dist/" \;
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
           name: AppImage
           path: 'dist/*.AppImage*'
 
       - name: Upload version artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
           name: version
           path: 'dist/version'
@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - name: Download AppImage artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v2
         with:
           name: AppImage
 
