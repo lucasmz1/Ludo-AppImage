@@ -28,7 +28,8 @@ jobs:
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create dist folder
-        run: mkdir -p '${GITHUB_WORKSPACE}/dist/'
+        run: |
+          mkdir -p '${GITHUB_WORKSPACE}/dist/'
 
       - name: Make AppImage
         run: |
