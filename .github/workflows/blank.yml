@@ -44,14 +44,7 @@ jobs:
           pacman -Sy xorg-server-xvfb findutils file binutils patchelf findutils grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
-          find -iname '**.AppImage**' -type f | xargs -i -t -exec mv {} ${GITHUB_WORKSPACE}/dist/ \;
-          if ls dist/*.AppImage 1> /dev/null 2>&1; then
-          mv dist/*.AppImage dist/Ludo-${APP_VERSION}.AppImage
-          else
-          echo "❌ Nenhum arquivo .AppImage encontrado em dist/"
-          find . -type f
-          exit 1
-          fi
+          find -iname 'Ludo*.AppImage' -type f | xargs -i -t -exec mv {} ${GITHUB_WORKSPACE}/dist/ \;
 
           echo "${APP_VERSION}" > dist/version
 
