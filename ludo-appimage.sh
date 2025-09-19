@@ -28,11 +28,7 @@ wget -c "$URL_BIN1"
 echo "Baixando checksum: $URL_SHA1"
 wget -c "$URL_SHA1"
 
-# Detecta o nome do diretório extraído
-EXTRACTED_DIR=$(tar -tf Ludo*.tar.gz | head -n1 | cut -d/ -f1)
-
-# Renomeia para nome fixo
-mv "$EXTRACTED_DIR" Ludo-Linux-x11-x86_64
+tar xvf Ludo*.tar.gz 
 
 mv Ludo*.tar.gz bkp.tar.gz
 mv Ludo-Linux-x11-x86_64*.sha256 bkp.sha256
