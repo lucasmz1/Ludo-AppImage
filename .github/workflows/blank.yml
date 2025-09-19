@@ -60,7 +60,7 @@ jobs:
       - name: Download AppImage artifact
         uses: actions/download-artifact@v4
         with:
-          name: AppImage
+          name: 'Ludo*AppImage'
 
       - name: Download version artifact
         uses: actions/download-artifact@v4
