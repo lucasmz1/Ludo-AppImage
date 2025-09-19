@@ -27,29 +27,25 @@ jobs:
           VERSION=$(curl -s https://api.github.com/repos/libretro/ludo/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Create dist folder
-        run: |
-          mkdir 'dist/'
-
       - name: Make AppImage
         run: |
           pacman -Sy xorg-server-xvfb findutils file binutils patchelf grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
-          find . -iname 'Ludo*.AppImage' -type f -exec mv {} "dist/" \;
-          echo "${APP_VERSION}" > "dist/version.txt"
+          find . -iname 'Ludo*.AppImage' -type f -exec mv {} "${GITHUB_WORKSPACE}" \;
+          echo "${APP_VERSION}" > "${GITUHB_WORKSPACE}/version.txt"
 
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v4
         with:
           name: AppImage
-          path: "dist/*.AppImage*"
+          path: "${GITUHB_WORKSPACE}/*.AppImage*"
 
       - name: Upload version artifact
         uses: actions/upload-artifact@v4
         with:
           name: version
-          path: "dist/version.txt"
+          path: "${GITUHB_WORKSPACE}/version.txt"
 
   release:
     needs: [build]
