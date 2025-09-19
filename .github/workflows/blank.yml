@@ -38,7 +38,7 @@ jobs:
     
       - name: Read version
         run: |
-          VERSION=$(cat version)
+          VERSION=$(cat version.txt)
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
     
       - name: Delete Previous Release
