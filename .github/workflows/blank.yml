@@ -37,7 +37,7 @@ jobs:
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           find . -iname 'Ludo*.AppImage' -type f -exec mv {} "${GITUHB_WORKSPACE}/dist/" \;
-          echo "${APP_VERSION}" > "${GITUHB_WORKSPACE}/dist/"
+          echo "${APP_VERSION}" > "${GITUHB_WORKSPACE}/dist/version"
 
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v4
