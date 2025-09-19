@@ -70,4 +70,4 @@ EOF
 cd ..
 
 wget -c "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage" && mv appimagetool-x86_64.AppImage appimagetool && chmod +x appimagetool
-find -iname '**Ludo**' -type d | xargs -i -t ARCH=x86_64 ./appimagetool --appimage-extract-and-run -n {}
+find -iname '**Ludo**' -type d | xargs -i -t -exec ./appimagetool --appimage-extract-and-run -n {}
