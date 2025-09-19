@@ -29,6 +29,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
+      - name: Get Ludo version from GitHub
+        run: |
+          VERSION=$(curl -s https://api.github.com/repos/libretro/ludo/releases/latest | jq -r .tag_name)
+          echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Make AppImage
         run: |
           pacman -Sy xorg-server-xvfb file binutils patchelf findutils grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
@@ -36,6 +41,8 @@ jobs:
           ./ludo-appimage.sh
           mkdir dist
           mv *.AppImage* dist/
+          mv dist/*.AppImage dist/Ludo-${APP_VERSION}.AppImage
+          echo "${APP_VERSION}" > dist/version
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -60,6 +67,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: AppImage
+      - name: Download version artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: version
+
+      - name: Read version
+        run: echo "APP_VERSION=$(cat version)" >> $GITHUB_ENV
 
       - name: Delete Previous Release
         run: |
@@ -71,13 +85,14 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Continuous universal"
-          tag_name: continuous-universal
+          name: "Ludo ${{ env.APP_VERSION }}"
+          tag_name: ${{ env.APP_VERSION }}
           prerelease: false
           draft: false
           generate_release_notes: false
           make_latest: true
           files: |
-            *.AppImage*
+            Ludo-${{ env.APP_VERSION }}.AppImage
+            
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
