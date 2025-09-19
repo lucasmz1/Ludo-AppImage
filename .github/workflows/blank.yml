@@ -33,7 +33,7 @@ jobs:
           pacman -Sy xorg-server-xvfb findutils file binutils patchelf grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
-          mkdir dist
+          mkdir -p dist
           find -iname 'Ludo-x86_64.AppImage' | xargs -i -t -exec mv {} dist/ \;
           ls -la dist/
 
