@@ -36,7 +36,7 @@ jobs:
 
       - name: creat dist
         run: |
-          mkdir -p ${GITHUB_WORKSPACE}/dist
+          mkdir -p ./dist/
 
       - name: Make AppImage
         run: |
@@ -44,7 +44,7 @@ jobs:
           pacman -Sy xorg-server-xvfb findutils file binutils patchelf findutils grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
-          find -iname 'Ludo*.AppImage' -type f | xargs -i -t -exec mv {} ${GITHUB_WORKSPACE}/dist/ \;
+          find -iname 'Ludo*.AppImage' -type f | xargs -i -t -exec mv {} ./dist/ \;
 
           echo "${APP_VERSION}" > dist/version
 
@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AppImage
-          path: '${GITHUB_WORKSPACE}/dist/*.AppImage*'
+          path: './dist/*.AppImage*'
 
       - name: Upload version artifact
         uses: actions/upload-artifact@v4
