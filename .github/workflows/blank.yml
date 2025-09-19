@@ -1,32 +1,25 @@
 name: Ludo AppImage
 
-# Controls when the action will run.
 on:
-  # Build at 00:00 every 6th day
   schedule:
     - cron: "0 0 */6 * *"
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
     paths-ignore: [ '**/README.md' ]
   pull_request:
     branches: [ main ]
     paths-ignore: [ '**/README.md' ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    name: 'setup os target'
+    name: setup os target
     runs-on: ubuntu-latest
     container:
-     image: archlinux:latest
+      image: archlinux:latest
     strategy:
       fail-fast: false
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
       - name: Get Ludo version from GitHub
@@ -34,70 +27,29 @@ jobs:
           VERSION=$(curl -s https://api.github.com/repos/libretro/ludo/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
           echo "APP_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: 'creat dist'
-        run: |
-          mkdir -p ./dist/
+      - name: Create dist folder
+        run: mkdir -p ./dist/
 
       - name: Make AppImage
         run: |
           set -ex
-          pacman -Sy xorg-server-xvfb findutils file binutils patchelf findutils grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
+          pacman -Sy xorg-server-xvfb findutils file binutils patchelf grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
-          find -iname 'Ludo*.AppImage' -type f | xargs -i -t -exec mv {} ./dist/ \;
-
+          find . -iname 'Ludo*.AppImage' -type f -exec mv {} ./dist/ \;
           echo "${APP_VERSION}" > dist/version
 
-      - name: Upload artifact
+      - name: Upload AppImage artifact
         uses: actions/upload-artifact@v4
         with:
           name: AppImage
-          path: '$PWD/dist/*.AppImage'
+          path: ./dist/*.AppImage
 
       - name: Upload version artifact
         uses: actions/upload-artifact@v4
         with:
           name: version
-          path: 'dist/version'
+          path: dist/version
 
-    release:
-     needs: [build]
-     permissions:
-       contents: write
-     runs-on: ubuntu-latest
-
-     steps:
-      - name: Download AppImage artifact
-        uses: actions/download-artifact@v4
-        with:
-         name: AppImage
-      - name: Download version artifact
-        uses: actions/download-artifact@v4
-        with:
-         name: version
-
-
-      - name: Read version
-        run: echo "APP_VERSION=$(cat version)" >> $GITHUB_ENV
-
-      - name: Delete Previous Release
-        run: |
-          gh release delete "${APP_VERSION}" --repo "${GITHUB_REPOSITORY}" --cleanup-tag -y || echo "No release to delete"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
-
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
-        with:
-          name: "Ludo ${{ env.APP_VERSION }}"
-          tag_name: ${{ env.APP_VERSION }}
-          prerelease: false
-          draft: false
-          generate_release_notes: false
-          make_latest: true
-          files: |
-            AppImage/Ludo-${{ env.APP_VERSION }}.AppImage
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release:
+    needs: [build]
