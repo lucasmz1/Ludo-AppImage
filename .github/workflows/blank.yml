@@ -33,19 +33,19 @@ jobs:
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           find . -iname 'Ludo*.AppImage' -type f -exec mv {} "${GITHUB_WORKSPACE}" \;
-          echo "${APP_VERSION}" > "${GITUHB_WORKSPACE}/version.txt"
+          echo "${APP_VERSION}" > "${GITHUB_WORKSPACE}/version.txt"
 
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v4
         with:
           name: AppImage
-          path: "${GITUHB_WORKSPACE}/*.AppImage*"
+          path: "${GITHUB_WORKSPACE}/*.AppImage*"
 
       - name: Upload version artifact
         uses: actions/upload-artifact@v4
         with:
           name: version
-          path: "${GITUHB_WORKSPACE}/version.txt"
+          path: "${GITHUB_WORKSPACE}/version.txt"
 
   release:
     needs: [build]
