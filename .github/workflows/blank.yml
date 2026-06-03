@@ -21,16 +21,14 @@ jobs:
   build:
     name: setup os target
     runs-on: ubuntu-latest
-    container:
-      image: archlinux:latest
-    strategy:
-      fail-fast: false
     steps:
       - uses: actions/checkout@v4
       
       - name: Make AppImage
         run: |
-          pacman -Sy xorg-server-xvfb findutils file binutils patchelf grep sed coreutils strace wget curl glfw-x11 mesa openal fuse2 fuse3 --noconfirm
+          sudo apt-get update
+          sudo apt-get install xvfb file binutils patchelf findutils grep sed coreutils strace vulkan-tools -y
+          sudo apt-get install libvulkan1 mesa-vulkan-drivers vulkan-tools libvulkan-dev vulkan-validationlayers -y
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir -p dist
