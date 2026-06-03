@@ -47,19 +47,19 @@ wget -c "$URL_BIN2"
 
 mv sharun-x86_64 sharun && chmod +x sharun && mv sharun ./Ludo-Linux-x11-x86_64* && cd Ludo-Linux-x11-x86_64* && xvfb-run -a ./sharun l -p -v -e -s -k ./ludo \
   ./cores/* \
-  /usr/lib/x86_64-linux-gnu/dri/* \
-	/usr/lib/x86_64-linux-gnu/vdpau/* \
-	/usr/lib/x86_64-linux-gnu/lib*CL*.so* \
-	/usr/lib/x86_64-linux-gnu/libvulkan*.so* \
-	/usr/lib/x86_64-linux-gnu/libVkLayer*.so* \
-	/usr/lib/x86_64-linux-gnu/libvulkan_* \
-	/usr/lib/x86_64-linux-gnu/libvulkan* \
-  /usr/lib/x86_64-linux-gnu/lib*GL*.so* \
-	/usr/lib/x86_64-linux-gnu/libXss.so* \
-	/usr/lib/x86_64-linux-gnu/alsa-lib/* \
-	/usr/lib/x86_64-linux-gnu/pulseaudio/* \
-	/usr/lib/x86_64-linux-gnu/pipewire-0.3/* \
-	/usr/lib/x86_64-linux-gnu/spa-0.2/*/* || true && ./sharun -g && ln sharun AppRun
+  /usr/lib/dri/* \
+	/usr/lib/vdpau/* \
+	/usr/lib/lib*CL*.so* \
+	/usr/lib/libvulkan*.so* \
+	/usr/lib/libVkLayer*.so* \
+	/usr/lib/libvulkan_* \
+	/usr/lib/libvulkan* \
+  /usr/lib/lib*GL*.so* \
+	/usr/lib/libXss.so* \
+	/usr/lib/alsa-lib/* \
+	/usr/lib/pulseaudio/* \
+	/usr/lib/pipewire-0.3/* \
+	/usr/lib/spa-0.2/*/* || true && ./sharun -g && ln sharun AppRun && mv -f ./shared/lib/cores/ ./bin/
 mv assets ./bin && mv cores ./bin && mv database ./bin
 find ${GITHUB_WORKSPACE} -iname 'icon.svg' | xargs -i -t -exec cp {} .
 rm ludo
