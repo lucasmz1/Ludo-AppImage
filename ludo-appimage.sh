@@ -47,6 +47,27 @@ wget -c "$URL_BIN2"
 
 mv sharun-x86_64 sharun && chmod +x sharun && mv sharun ./Ludo-Linux-x11-x86_64* && cd Ludo-Linux-x11-x86_64* && xvfb-run -a ./sharun l -p -v -e -s -k ./ludo \
   	/usr/lib/x86_64-linux-gnu/dri/* \
+	/usr/lib/x86_64-linux-gnu/gconv/* \
+	/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 \
+	/usr/lib/x86_64-linux-gnu/libm.so.6 \
+	/usr/lib/x86_64-linux-gnu/libnss_files.so.2 \
+	/usr/lib/x86_64-linux-gnu/libresolv.so.2 \
+	/usr/lib/x86_64-linux-gnu/libBrokenLocale.so.1 \
+	/usr/lib/x86_64-linux-gnu/libnsl.so.1 \
+	/usr/lib/x86_64-linux-gnu/libanl.so.1 \
+	/usr/lib/x86_64-linux-gnu/libthread_db.so.1 \
+	/usr/lib/x86_64-linux-gnu/libpcprofile.so \
+	/usr/lib/x86_64-linux-gnu/libnss_compat.so.2 \
+	/usr/lib/x86_64-linux-gnu/libutil.so.1 \
+	/usr/lib/x86_64-linux-gnu/libnss_dns.so.2 \
+	/usr/lib/x86_64-linux-gnu/libpthread.so.0 \
+	/usr/lib/x86_64-linux-gnu/libnss_hesiod.so.2 \
+	/usr/lib/x86_64-linux-gnu/librt.so.1 \
+	/usr/lib/x86_64-linux-gnu/libmvec.so.1 \
+	/usr/lib/x86_64-linux-gnu/libc.so.6 \
+	/usr/lib/x86_64-linux-gnu/libmemusage.so \
+	/usr/lib/x86_64-linux-gnu/libc_malloc_debug.so.0 \
+	/usr/lib/x86_64-linux-gnu/libdl.so.2 \
 	/usr/lib/x86_64-linux-gnu/vdpau/* \
 	/usr/lib/x86_64-linux-gnu/lib*CL*.so* \
 	/usr/lib/x86_64-linux-gnu/libvulkan*.so* \
