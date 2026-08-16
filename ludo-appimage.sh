@@ -48,6 +48,17 @@ wget -c "$URL_BIN2"
 mv sharun-x86_64 sharun && chmod +x sharun && mv sharun ./Ludo-Linux-x11-x86_64* && cd Ludo-Linux-x11-x86_64* && xvfb-run -a ./sharun l -p -v -e -s -k ./ludo \
   	/usr/lib/x86_64-linux-gnu/dri/* \
 	/usr/lib/x86_64-linux-gnu/gconv/* \
+	/lib/x86_64-linux-gnu/libGL.so* \
+	/lib/x86_64-linux-gnu/libm.so* \
+	/lib/x86_64-linux-gnu/libc.so* \
+	/lib/x86_64-linux-gnu/libGLdispatch.so* \
+	/lib/x86_64-linux-gnu/libGLX.so* \
+	/lib/x86_64-linux-gnu/libX11.so* \
+	/lib/x86_64-linux-gnu/libxcb.so* \
+	/lib/x86_64-linux-gnu/libXau.so* \
+	/lib/x86_64-linux-gnu/libXdmcp.so* \
+	/lib/x86_64-linux-gnu/libbsd.so* \
+	/lib/x86_64-linux-gnu/libmd.so* \
 	/usr/lib/x86_64-linux-gnu/libopenal.so* \
 	/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 \
 	/usr/lib/x86_64-linux-gnu/libm.so.6 \
