@@ -28,7 +28,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install xvfb file binutils patchelf findutils grep sed coreutils strace vulkan-tools -y
-          sudo apt-get install libvulkan1 mesa-vulkan-drivers vulkan-tools libvulkan-dev vulkan-validationlayers -y
+          sudo apt-get install libvulkan1 mesa-vulkan-drivers vulkan-tools libvulkan-dev vulkan-validationlayers libopenal1 -y
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir -p dist
