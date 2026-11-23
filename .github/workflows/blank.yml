@@ -20,15 +20,30 @@ on:
 jobs:
   build:
     name: setup os target
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
     steps:
       - uses: actions/checkout@v4
       
       - name: Make AppImage
         run: |
-          sudo apt-get update
-          sudo apt-get install xvfb file binutils patchelf findutils grep sed coreutils strace vulkan-tools -y
-          sudo apt-get install libvulkan1 mesa-vulkan-drivers vulkan-tools libvulkan-dev vulkan-validationlayers libopenal1 -y
+          pacman -Syu --noconfirm && pacman -S --noconfirm --needed \
+          xorg-server-xvfb \
+          file \
+          binutils \
+          patchelf \
+          findutils \
+          grep \
+          sed \
+          coreutils \
+          strace \
+          vulkan-tools \
+          vulkan-icd-loader \
+          vulkan-swrast \
+          vulkan-headers \
+          vulkan-validation-layers \
+          openal
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir -p dist
