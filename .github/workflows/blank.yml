@@ -43,7 +43,10 @@ jobs:
           vulkan-swrast \
           vulkan-headers \
           vulkan-validation-layers \
-          openal
+          openal \
+          wget \
+          curl \
+          gzip
           chmod a+x ludo-appimage.sh
           ./ludo-appimage.sh
           mkdir -p dist
